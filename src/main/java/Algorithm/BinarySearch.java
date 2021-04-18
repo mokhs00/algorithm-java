@@ -45,6 +45,11 @@ public class BinarySearch {
         return right;
     }
 
+
+    /*
+        arr에서 target의 가장 작은 인덱스를 반환
+        target이 arr에 없다면 -1 반환
+     */
     public int lowerBound(int[] arr, int target, int left, int right) {
         while (left < right) {
             int mid = (left + right) / 2;
@@ -55,9 +60,17 @@ public class BinarySearch {
             }
         }
 
+        if (arr[right] != target){
+            return -1;
+        }
+
         return right;
     }
 
+    /*
+        arr에서 target의 가장 큰 인덱스를 반환
+        target이 arr에 없다면 -1 반환
+     */
     public int upperBound(int[] arr, int target, int left, int right) {
         while (left < right) {
             int mid = (left + right) / 2;
@@ -66,6 +79,10 @@ public class BinarySearch {
             } else {
                 left = mid + 1;
             }
+        }
+
+        if (arr[right] != target){
+            return -1;
         }
 
         return right;
