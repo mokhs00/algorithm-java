@@ -8,33 +8,23 @@ public class 계단_오르기_2579 {
 
         int N = sc.nextInt();
 
-        int[] steps = new int[N];
+        int[] steps = new int[N + 1];
 
-        for (int i = 0; i < N; i++) {
+        for (int i = 1; i <= N; i++) {
             steps[i] = sc.nextInt();
         }
 
-        int[] dp = new int[N];
+        int[] dp = new int[N + 1];
 
-        if (N < 2) {
-            System.out.println(steps[0]);
-            return;
-        }
+        dp[1] = steps[1];
 
-        if (N < 3){
-            System.out.println(steps[0] + steps[1]);
-            return;
-        }
-
-        dp[0] = steps[0];
-        dp[1] = steps[0] + steps[1];
-        dp[2] = Math.max(steps[0] + steps[2], steps[1] + steps[2]);
-
-        for (int i = 3; i < steps.length; i++) {
+        if (N > 1)
+            dp[2] = steps[1] + steps[2];
+        for (int i = 3; i <= N; i++) {
             dp[i] = Math.max(dp[i - 3] + steps[i - 1] + steps[i], dp[i - 2] + steps[i]);
         }
 
-        System.out.println(dp[N - 1]);
+        System.out.println(dp[N]);
 
     }
 }
