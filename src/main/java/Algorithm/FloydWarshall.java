@@ -28,10 +28,9 @@ public class FloydWarshall {
 
 
     public void run() {
-
-        for (int a = 0; a < N; a++) {
-            for (int b = 0; b < N; b++) {
-                for (int c = 0; c < N; c++) {
+        for (int c = 0; c < N; c++) {
+            for (int a = 0; a < N; a++) {
+                for (int b = 0; b < N; b++) {
                     dp[a][b] = Math.min(dp[a][b], dp[a][c] + dp[c][b]);
                 }
             }
