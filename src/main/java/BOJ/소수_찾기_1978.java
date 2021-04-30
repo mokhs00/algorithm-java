@@ -3,6 +3,7 @@ package BOJ;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+// https://www.acmicpc.net/problem/1978
 public class 소수_찾기_1978 {
     /*
         에라토스테네스의 체
