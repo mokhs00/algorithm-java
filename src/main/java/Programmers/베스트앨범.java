@@ -1,0 +1,123 @@
+package Programmers;
+
+import java.util.*;
+
+// https://programmers.co.kr/learn/courses/30/lessons/42579?language=java
+public class 베스트앨범 {
+    /*
+        구현 문제.
+
+        장르 별로 가장 많이 재생된 노래를 두 개씩 모아 베스트 앨범으로 출시.
+        노래는 고유 번호로 구분,
+
+        [노래를 수록하는 기준]
+        - 속한 노래가 많이 재생된 장르를 먼저 수록.
+            속한 노래의 총 재생 수를 세야함.
+
+        - 장르 내에서 많이 재생된 노래를 먼저 수록
+            장르 내에서 가장 많이 수록된 노래 순으로 정렬
+
+        - 장르 내에서 재생 횟수가 같은 노래 중에서는 고유 번호가 낮은 노래를 먼저 수록.
+            정렬 순서를 재생 횟수가 같을 때는 고유번호로 함.
+
+
+        노래 클래스를 만들고 HashMap에 장르별로 넣음.
+
+        HashMap에 장르 별 총 재생 수를 담음
+
+
+
+     */
+    public int[] solution(String[] genres, int[] plays) {
+        ArrayList<Integer> answerList = new ArrayList<>();
+        int[] answer;
+
+
+        HashMap<String, Integer> totalCount = new HashMap<>();
+        HashMap<String, PriorityQueue<Song>> songs = new HashMap<>();
+
+        for (int i = 0; i < genres.length; i++) {
+            String g = genres[i];
+            int p = plays[i];
+            Integer totalCountOrDefault = totalCount.getOrDefault(g, 0);
+            totalCount.put(g, totalCountOrDefault + p);
+
+            PriorityQueue<Song> songsOrDefault = songs.getOrDefault(g, new PriorityQueue<Song>(new Comparator<Song>() {
+                @Override
+                public int compare(Song o1, Song o2) {
+
+                    if (o1.count == o2.count) {
+                        return o1.index - o2.index;
+                    }
+                    return o2.count - o1.count;
+                }
+            }));
+
+            songsOrDefault.offer(new Song(i, p));
+            songs.put(g, songsOrDefault);
+        }
+
+        // 장르 별로 순서를 기록함.
+        Set<String> keySet = totalCount.keySet();
+
+        // 장르 클래스를 만들고 totalCount 기준 오름차순 정렬
+        PriorityQueue<Genre> genrePriorityQueue = new PriorityQueue<>(new Comparator<Genre>() {
+            @Override
+            public int compare(Genre o1, Genre o2) {
+                return o2.totalCount - o1.totalCount;
+            }
+        });
+
+        for (String key : keySet) {
+            Integer count = totalCount.get(key);
+            genrePriorityQueue.offer(new Genre(key, count));
+        }
+
+        while (!genrePriorityQueue.isEmpty()) {
+            Genre genrePoll = genrePriorityQueue.poll();
+
+            String genre = genrePoll.genre;
+            PriorityQueue<Song> queue = songs.get(genre);
+            if (queue.size() < 2) {
+                answerList.add(queue.poll().index);
+            } else {
+                for (int i = 0; i < 2; i++) {
+                    answerList.add(queue.poll().index);
+                }
+            }
+
+        }
+
+        answer = new int[answerList.size()];
+
+        for (int i = 0; i < answerList.size(); i++) {
+            answer[i] = answerList.get(i);
+        }
+
+
+        return answer;
+    }
+
+    class Genre {
+        String genre;
+        int totalCount;
+
+        public Genre(String genre, int totalCount) {
+            this.genre = genre;
+            this.totalCount = totalCount;
+        }
+    }
+
+
+    class Song {
+        int index;
+        int count;
+
+        public Song(int index, int count) {
+            this.index = index;
+            this.count = count;
+        }
+    }
+
+
+}
