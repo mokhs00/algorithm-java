@@ -27,7 +27,7 @@ public class 베스트앨범 {
 
         또 다른 HashMap에 `장르 별 총 재생 수`를 담음.
 
-        이를 가지고 주어진 정렬 기준에 따라 answerList에 정렬해두고
+        이를 가지고 주어진 정렬 기준에 따라 answerList에 정렬해둔 값을 return
 
 
 
