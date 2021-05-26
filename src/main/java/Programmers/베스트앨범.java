@@ -101,6 +101,16 @@ public class 베스트앨범 {
 
         return answer;
     }
+    
+    class Genre {
+        String genre;
+        int totalCount;
+
+        public Genre(String genre, int totalCount) {
+            this.genre = genre;
+            this.totalCount = totalCount;
+        }
+    }
 
     class Song {
         int index;
