@@ -1,54 +1,51 @@
 package BOJ;
 
-import java.util.Scanner;
+import java.io.*;
 import java.util.Stack;
 
 // https://www.acmicpc.net/problem/9012
 public class 괄호_9012 {
-    /*
-        ( 일때 스택에 넣고
-        ) 일때는 스택에서 빼야함
-            -> 스택이 비어 있다면 false
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-    */
-    public static void main(String[] args) throws Exception {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
 
-        int N = sc.nextInt();
-        sc.nextLine();
+        int i = Integer.parseInt(br.readLine());
 
-        for (int i = 0; i < N; i++) {
-            String input = sc.nextLine();
+        main:
+        for (int h = 0; h < i; h++) {
+            Stack<String> stack = new Stack<>();
 
-            char[] chars = input.toCharArray();
-            Stack<Character> stack = new Stack<>();
+            String input = br.readLine();
+            String[] split = input.split("");
 
-            boolean isVPS = true;
+            for (int k = 0; k < split.length; k++) {
+                String cur = split[k];
 
-            for (int j = 0; j < chars.length; j++) {
-                if (chars[j] == '(') {
-                    stack.add(chars[j]);
-                } else {
+                if (cur.equals("(")) {
+                    stack.add("(");
+                    continue;
+                }
+
+                if (cur.equals(")")) {
                     if (stack.isEmpty()) {
-                        isVPS = false;
-                        break;
+                        System.out.println("NO");
+                        continue main;
                     }
+
                     stack.pop();
                 }
-            }
-            String answer = "";
 
-            if (!stack.isEmpty()) {
-                isVPS = false;
             }
 
-            if (isVPS)
-                answer = "YES";
-            else
-                answer = "NO";
-
-            System.out.println(answer);
+            if (stack.isEmpty()) {
+                System.out.println("YES");
+            } else {
+                System.out.println("NO");
+            }
         }
 
+        br.close();
+        bw.close();
     }
 }
