@@ -1,51 +1,46 @@
 package BOJ;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Stack;
 
 // https://www.acmicpc.net/problem/1874
 public class 스택_수열_1874 {
-    /*
-        *StringBuilder를 사용하면 출력 시간 단축
-     */
 
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-
-        int N = Integer.parseInt(br.readLine());
-        int[] inputs = new int[N + 1];
-
-        for (int i = 1; i <= N; i++) {
-            inputs[i] = Integer.parseInt(br.readLine());
-        }
-
+    public static void main(String[] args) throws IOException {
+        int n = Integer.parseInt(br.readLine());
+        int nextNum = 1;
 
         Stack<Integer> stack = new Stack<>();
 
-        int now = 1;
+        StringBuffer sb = new StringBuffer();
 
-        for (int i = 1; i <= N; i++) {
 
-            stack.add(i);
-            sb.append("+\n");
+        for (int i = 0; i < n; i++) {
+            int input = Integer.parseInt(br.readLine());
 
-            while (!stack.isEmpty() && stack.peek() == inputs[now]) {
-                stack.pop();
-                sb.append("-\n");
-                now++;
+
+            while (nextNum <= input) {
+                stack.push(nextNum++);
+                sb.append("+\n");
             }
 
+            if (stack.peek() == input) {
+                stack.pop();
+                sb.append("-\n");
+            }
 
         }
 
         if (!stack.isEmpty()) {
-            System.out.println("NO");
-            return;
+            sb = new StringBuffer("NO");
         }
+        bw.write(sb.toString());
 
-        System.out.println(sb.toString());
+
+        br.close();
+        bw.close();
     }
 }
