@@ -10,7 +10,6 @@ public class 에디터_1406 {
 
     public static void main(String[] args) throws IOException {
 
-
         String line = br.readLine();
         String[] inputs = line.split("");
 
